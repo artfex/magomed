@@ -2,6 +2,24 @@
 <html>
     <head>
         <meta charset="utf-8" />
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script>
+            function statusActive(user_id) {
+                if (confirm("Активировать клиента?") == true) {
+                    $.ajax({
+                        type: "POST",
+                        url: "user_active.php",
+                        data: {'user_id': user_id},
+                        success: function (data) {
+                            alert(data);
+                        },
+                        error: function (xhr) {
+                            alert('Возникла ошибка: ' + xhr.status + ' ' + xhr.statusText);
+                        }
+                    });
+                }
+            }
+        </script>
     </head>
     <body>
         <table>
@@ -38,6 +56,7 @@ foreach ($users as $user) {
             <td style="text-align: center; padding: 2px; border: solid 1px;"><?php echo $user['name']; ?></td>
             <td style="text-align: center; padding: 2px; border: solid 1px;"><?php echo date('Y-m-d', $product['date_register']); ?></td>
             <td style="text-align: center; padding: 2px; border: solid 1px;"><?php echo $status; ?></td>
+            <td style="text-align: center; padding: 2px; border: solid 1px;" onclick="statusActive(<?php echo $user['id']; ?>)">активировать</td>
         </tr>
     <?php
 }
